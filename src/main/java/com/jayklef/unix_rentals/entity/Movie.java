@@ -28,4 +28,8 @@ public class Movie {
 
     @Column(name = "releaseYear", nullable = false)
     private Date releaseYear;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 }
