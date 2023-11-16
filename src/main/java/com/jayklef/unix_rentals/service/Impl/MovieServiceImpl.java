@@ -55,6 +55,20 @@ public class MovieServiceImpl implements MovieService {
         return convertToMovieDto(movie);
     }
 
+    @Override
+    public MovieDto updateMovie(Long id, MovieDto movieDto) {
+
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
+        movie.setTitle(movieDto.getTitle());
+        movie.setDirector(movieDto.getDirector());
+        movie.setReleaseYear(movieDto.getReleaseYear());
+
+        Movie updatedMovie = movieRepository.save(movie);
+
+        return convertToMovieDto(updatedMovie);
+    }
+
     private MovieDto convertToMovieDto(Movie movie){
         MovieDto movieDto = new MovieDto();
         movieDto.setId(movie.getId());
@@ -63,5 +77,13 @@ public class MovieServiceImpl implements MovieService {
         movieDto.setReleaseYear(movie.getReleaseYear());
 
         return movieDto;
+    }
+
+    @Override
+    public void deleteMovie(Long id){
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
+
+        movieRepository.delete(movie);
     }
 }

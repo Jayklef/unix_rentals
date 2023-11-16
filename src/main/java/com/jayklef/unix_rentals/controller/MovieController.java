@@ -37,4 +37,17 @@ public class MovieController {
         MovieDto movie = movieService.getMovie(id);
         return ResponseEntity.ok(movie);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDto> updateMovie(@PathVariable("id") Long id,
+                                                @RequestBody MovieDto movieDto){
+        MovieDto movieToUpdate = movieService.updateMovie(id, movieDto);
+        return new ResponseEntity<>(movieToUpdate, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable("id") Long id){
+        movieService.deleteMovie(id);
+        return ResponseEntity.ok("Movie deleted successfully");
+    }
 }
