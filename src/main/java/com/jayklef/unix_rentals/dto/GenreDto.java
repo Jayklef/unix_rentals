@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class GenreDto {
 
@@ -12,4 +14,6 @@ public class GenreDto {
     @NotEmpty
     @Size(min = 4, message = "Genre must have a minimum of 4 characters")
     private String name;
+
+    private List<MovieDto> movies;
 }

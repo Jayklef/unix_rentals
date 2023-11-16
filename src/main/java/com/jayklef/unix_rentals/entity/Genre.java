@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +26,5 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 }

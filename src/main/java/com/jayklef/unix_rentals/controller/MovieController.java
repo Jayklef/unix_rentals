@@ -5,10 +5,9 @@ import com.jayklef.unix_rentals.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies/")
@@ -20,9 +19,22 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<MovieDto> createMovie(@Valid @RequestBody MovieDto movieDto){
         MovieDto newMovie = movieService.saveMovie(movieDto);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieDto>> movies(){
+        List<MovieDto> movies = movieService.getAllMovies();
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDto> getMovioe(@PathVariable("id") Long id){
+        MovieDto movie = movieService.getMovie(id);
+        return ResponseEntity.ok(movie);
     }
 }

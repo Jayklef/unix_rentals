@@ -1,16 +1,15 @@
 package com.jayklef.unix_rentals.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "movies",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
 )
