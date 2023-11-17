@@ -25,6 +25,6 @@ public class Genre {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
     private List<Movie> movies = new ArrayList<>();
 }

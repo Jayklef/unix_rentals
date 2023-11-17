@@ -1,8 +1,11 @@
 package com.jayklef.unix_rentals.controller;
 
 import com.jayklef.unix_rentals.dto.MovieDto;
+import com.jayklef.unix_rentals.dto.MovieResponse;
 import com.jayklef.unix_rentals.service.MovieService;
+import com.jayklef.unix_rentals.util.ParamConstants;
 import jakarta.validation.Valid;
+import org.hibernate.id.factory.IdentifierGeneratorFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +29,13 @@ public class MovieController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<MovieDto>> movies(){
-        List<MovieDto> movies = movieService.getAllMovies();
-        return new ResponseEntity<>(movies, HttpStatus.OK);
+    public MovieResponse getAllMovies(
+            @RequestParam(value = "pageNo", defaultValue = ParamConstants.DEFAULT_PAGE_NO, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = ParamConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = ParamConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = ParamConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir){
+        MovieResponse movies = movieService.getAllMovies(pageNo, pageSize, sortBy, sortDir);
+        return movies;
 
     }
 

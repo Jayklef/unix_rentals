@@ -1,13 +1,14 @@
 package com.jayklef.unix_rentals.service;
 
 import com.jayklef.unix_rentals.dto.MovieDto;
+import com.jayklef.unix_rentals.dto.MovieResponse;
 
 import java.util.List;
 
 public interface MovieService {
     MovieDto saveMovie(MovieDto movieDto);
 
-    List<MovieDto> getAllMovies();
+    MovieResponse getAllMovies(int pageNo, int pageSize, String sortDir, String sortBy);
 
     MovieDto getMovie(Long id);
 
