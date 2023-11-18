@@ -1,6 +1,7 @@
 package com.jayklef.unix_rentals.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jayklef.unix_rentals.entity.Genre;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -25,4 +26,7 @@ public class MovieDto {
 
     @JsonFormat(pattern = "YYYY")
     private Date releaseYear;
+
+    @NotEmpty
+    private Genre genre;
 }

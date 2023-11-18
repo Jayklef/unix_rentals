@@ -32,6 +32,7 @@ public class MovieServiceImpl implements MovieService {
         movie.setTitle(movieDto.getTitle());
         movie.setDirector(movieDto.getDirector());
         movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setGenre(movieDto.getGenre());
 
         Movie newMovie = movieRepository.save(movie);
 
