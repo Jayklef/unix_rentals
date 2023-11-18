@@ -2,10 +2,14 @@ package com.jayklef.unix_rentals.service.Impl;
 
 import com.jayklef.unix_rentals.dto.GenreDto;
 import com.jayklef.unix_rentals.entity.Genre;
+import com.jayklef.unix_rentals.exception.ResourceNotFoundException;
 import com.jayklef.unix_rentals.repository.GenreRepository;
 import com.jayklef.unix_rentals.service.GenreService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -30,6 +34,41 @@ public class GenreServiceImpl implements GenreService {
         Genre newGenre = genreRepository.save(genre);
         return convertToGenreDto(newGenre);
 
+    }
+
+    @Override
+    public List<GenreDto> allGenre() {
+        return genreRepository.findAll()
+                .stream()
+                .map(genre -> convertToGenreDto(genre))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public GenreDto getById(Long id) {
+
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Genre", "id", id));
+        return convertToGenreDto(genre);
+    }
+
+    @Override
+    public GenreDto updateGenre(Long id, GenreDto genreDto) {
+
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Genre", "id", id));
+
+        genre.setName(genreDto.getName());
+
+        Genre updatedGenre = genreRepository.save(genre);
+        return convertToGenreDto(updatedGenre);
+    }
+
+    @Override
+    public void deleteGenre(Long id) {
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Genre", "id", id));
+        genreRepository.delete(genre);
     }
 
     private GenreDto convertToGenreDto(Genre genre) {
