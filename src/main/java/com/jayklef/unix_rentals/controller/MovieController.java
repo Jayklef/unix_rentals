@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movies/")
+@RequestMapping("/api/movies")
 public class MovieController {
 
     private MovieService movieService;
@@ -22,7 +22,7 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<MovieDto> createMovie(@Valid @RequestBody MovieDto movieDto){
         MovieDto newMovie = movieService.saveMovie(movieDto);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
@@ -40,14 +40,14 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getMovioe(@PathVariable("id") Long id){
+    public ResponseEntity<MovieDto> getMovie(@PathVariable("id") Long id){
         MovieDto movie = movieService.getMovie(id);
         return ResponseEntity.ok(movie);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MovieDto> updateMovie(@PathVariable("id") Long id,
-                                                @RequestBody MovieDto movieDto){
+                                                @Valid @RequestBody MovieDto movieDto){
         MovieDto movieToUpdate = movieService.updateMovie(id, movieDto);
         return new ResponseEntity<>(movieToUpdate, HttpStatus.OK);
     }

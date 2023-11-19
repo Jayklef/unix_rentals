@@ -3,6 +3,7 @@ package com.jayklef.unix_rentals.controller;
 import com.jayklef.unix_rentals.dto.GenreDto;
 import com.jayklef.unix_rentals.service.GenreService;
 import com.jayklef.unix_rentals.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class GenreController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<GenreDto> createGenre(@RequestBody GenreDto genreDto){
+    public ResponseEntity<GenreDto> createGenre(@Valid @RequestBody GenreDto genreDto){
         GenreDto newGenre = genreService.createGenre(genreDto);
         return new ResponseEntity<>(newGenre, HttpStatus.CREATED);
     }
@@ -39,7 +40,7 @@ public class GenreController {
 
     @PutMapping("/{id}")
     public ResponseEntity<GenreDto> updateGenre(@PathVariable("id") Long id,
-                                                @RequestBody GenreDto genreDto){
+                                                @Valid @RequestBody GenreDto genreDto){
         GenreDto updatedGenre = genreService.updateGenre(id, genreDto);
         return ResponseEntity.ok(updatedGenre);
     }

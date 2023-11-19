@@ -27,6 +27,4 @@ public class MovieDto {
     @JsonFormat(pattern = "YYYY")
     private Date releaseYear;
 
-    @NotEmpty
-    private Genre genre;
 }

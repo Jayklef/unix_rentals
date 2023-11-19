@@ -32,7 +32,6 @@ public class MovieServiceImpl implements MovieService {
         movie.setTitle(movieDto.getTitle());
         movie.setDirector(movieDto.getDirector());
         movie.setReleaseYear(movieDto.getReleaseYear());
-        movie.setGenre(movieDto.getGenre());
 
         Movie newMovie = movieRepository.save(movie);
 
@@ -61,7 +60,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movieList = movies.getContent();
         List<MovieDto> content = movieList
                 .stream()
-                .map(movie -> convertToMovieDto(movie))
+                .map(this::convertToMovieDto)
                 .collect(Collectors.toList());
 
         MovieResponse movieResponse = new MovieResponse();
