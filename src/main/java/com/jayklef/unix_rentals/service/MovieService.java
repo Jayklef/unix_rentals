@@ -10,6 +10,8 @@ public interface MovieService {
 
     MovieResponse getAllMovies(int pageNo, int pageSize, String sortDir, String sortBy);
 
+    List<MovieDto> findAllByGenreId(Long genreId);
+
     MovieDto getMovie(Long id);
 
     MovieDto updateMovie(Long id, MovieDto movieDto);

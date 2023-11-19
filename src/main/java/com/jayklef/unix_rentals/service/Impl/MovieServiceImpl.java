@@ -4,6 +4,7 @@ import com.jayklef.unix_rentals.dto.MovieDto;
 import com.jayklef.unix_rentals.dto.MovieResponse;
 import com.jayklef.unix_rentals.entity.Movie;
 import com.jayklef.unix_rentals.exception.ResourceNotFoundException;
+import com.jayklef.unix_rentals.repository.GenreRepository;
 import com.jayklef.unix_rentals.repository.MovieRepository;
 import com.jayklef.unix_rentals.service.MovieService;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,12 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private MovieRepository movieRepository;
+    private GenreRepository genreRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository,
+                            GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Override
@@ -73,6 +77,15 @@ public class MovieServiceImpl implements MovieService {
 
 
         return movieResponse;
+    }
+
+    @Override
+    public List<MovieDto> findAllByGenreId(Long genreId) {
+        List<Movie> movies = movieRepository.findMoviesByGenreId(genreId);
+
+        return movies.stream()
+                .map(this::convertToMovieDto)
+                .collect(Collectors.toList());
     }
 
     @Override
