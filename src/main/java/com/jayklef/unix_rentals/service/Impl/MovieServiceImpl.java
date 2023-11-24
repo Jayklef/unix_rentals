@@ -2,6 +2,7 @@ package com.jayklef.unix_rentals.service.Impl;
 
 import com.jayklef.unix_rentals.dto.MovieDto;
 import com.jayklef.unix_rentals.dto.MovieResponse;
+import com.jayklef.unix_rentals.entity.Genre;
 import com.jayklef.unix_rentals.entity.Movie;
 import com.jayklef.unix_rentals.exception.ResourceNotFoundException;
 import com.jayklef.unix_rentals.repository.GenreRepository;
@@ -105,6 +106,7 @@ public class MovieServiceImpl implements MovieService {
         movie.setDirector(movieDto.getDirector());
         movie.setReleaseYear(movieDto.getReleaseYear());
 
+
         Movie updatedMovie = movieRepository.save(movie);
 
         return convertToMovieDto(updatedMovie);
@@ -116,6 +118,7 @@ public class MovieServiceImpl implements MovieService {
         movieDto.setTitle(movie.getTitle());
         movieDto.setDirector(movie.getDirector());
         movieDto.setReleaseYear(movie.getReleaseYear());
+        movieDto.setGenreId(movieDto.getId());
 
         return movieDto;
     }

@@ -2,6 +2,7 @@ package com.jayklef.unix_rentals.service.Impl;
 
 import com.jayklef.unix_rentals.dto.GenreDto;
 import com.jayklef.unix_rentals.entity.Genre;
+import com.jayklef.unix_rentals.entity.Movie;
 import com.jayklef.unix_rentals.exception.ResourceNotFoundException;
 import com.jayklef.unix_rentals.repository.GenreRepository;
 import com.jayklef.unix_rentals.service.GenreService;
@@ -49,6 +50,8 @@ public class GenreServiceImpl implements GenreService {
 
         Genre genre = genreRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Genre", "id", id));
+
+
         return convertToGenreDto(genre);
     }
 
@@ -73,9 +76,11 @@ public class GenreServiceImpl implements GenreService {
 
     private GenreDto convertToGenreDto(Genre genre) {
 
-        GenreDto genreDto = new GenreDto();
+    /*    GenreDto genreDto = new GenreDto();
         genreDto.setId(genre.getId());
-        genreDto.setName(genre.getName());
+        genreDto.setName(genre.getName());  */
+
+        GenreDto genreDto = mapper.map(genre, GenreDto.class);
 
         return genreDto;
     }
