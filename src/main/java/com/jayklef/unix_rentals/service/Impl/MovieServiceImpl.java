@@ -8,6 +8,7 @@ import com.jayklef.unix_rentals.exception.ResourceNotFoundException;
 import com.jayklef.unix_rentals.repository.GenreRepository;
 import com.jayklef.unix_rentals.repository.MovieRepository;
 import com.jayklef.unix_rentals.service.MovieService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +23,14 @@ public class MovieServiceImpl implements MovieService {
 
     private MovieRepository movieRepository;
     private GenreRepository genreRepository;
+    private ModelMapper mapper;
 
     public MovieServiceImpl(MovieRepository movieRepository,
-                            GenreRepository genreRepository) {
+                            GenreRepository genreRepository,
+                            ModelMapper mapper) {
         this.movieRepository = movieRepository;
         this.genreRepository = genreRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -102,9 +106,10 @@ public class MovieServiceImpl implements MovieService {
 
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
-        movie.setTitle(movieDto.getTitle());
+
+     /*   movie.setTitle(movieDto.getTitle());
         movie.setDirector(movieDto.getDirector());
-        movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setReleaseYear(movieDto.getReleaseYear());   */
 
 
         Movie updatedMovie = movieRepository.save(movie);
@@ -112,13 +117,27 @@ public class MovieServiceImpl implements MovieService {
         return convertToMovieDto(updatedMovie);
     }
 
+    private Movie convertToEntity(MovieDto movieDto){
+      /*  Movie movie = new Movie();
+        movie.setTitle(movieDto.getTitle());
+        movie.setDirector(movieDto.getDirector());
+        movie.setDirector(movieDto.getDirector());
+        movie.setGenre(movieDto.getGenreId());   */
+
+        Movie movie = mapper.map(movieDto, Movie.class);
+
+        return movie;
+    }
+
     private MovieDto convertToMovieDto(Movie movie){
-        MovieDto movieDto = new MovieDto();
+      /*  MovieDto movieDto = new MovieDto();
         movieDto.setId(movie.getId());
         movieDto.setTitle(movie.getTitle());
         movieDto.setDirector(movie.getDirector());
         movieDto.setReleaseYear(movie.getReleaseYear());
-        movieDto.setGenreId(movieDto.getId());
+        movieDto.setGenreId(movie.getGenre().getId());   */
+
+        MovieDto movieDto = mapper.map(movie, MovieDto.class);
 
         return movieDto;
     }
